@@ -1,0 +1,14 @@
+[build]
+  command = "next build"
+  publish = ".next"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "false"
+  SITE_NAME = "tyrelldasilva.com"
+
+[images]
+  remote_images = [
+    "https://ext.same-assets.com/**",
+    "https://garyvaynerchuk.com/**",
+    "https://i.ibb.co/**"
+  ]
