@@ -12,7 +12,7 @@ const Navbar = () => {
   // Logo image with increased size (now 87.5% larger than original) and transparent background
   const logo = (
     <Image
-      src="/images/Tyrell_Varaint_Logos.png"
+      src="/images/Tyrell_Varaint_logos.png"
       alt="Tyrell Dasilva Logo"
       width={188}
       height={188}
