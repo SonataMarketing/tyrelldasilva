@@ -4,38 +4,13 @@ import React from "react";
 
 export default function BusinessCards() {
   return (
-    <div
-      style={{
-        backgroundColor: "#111111",
-        padding: "80px 0",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "0 24px",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "28px",
-            fontWeight: "bold",
-            marginBottom: "40px",
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          MY COMPANIES
+    <div className="bg-[#111111] py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16">
+      <div className="max-w-sm sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 lg:mb-12 xl:mb-14 text-white text-center">
+          CURRENT PROJECTS
         </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "24px",
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
           {/* Card 1 - Sonata Design */}
           <a
             href="https://www.sonatadesign.ca/"

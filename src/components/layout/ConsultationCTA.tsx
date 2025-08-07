@@ -17,9 +17,7 @@ const ConsultationCTA = () => {
 
       <h3 className="text-2xl font-bold mb-4 uppercase">Transform Your Vision Into Reality</h3>
       <p className="text-gray-400 mb-8 max-w-xl">
-        Whether you're looking to elevate your space with premium window fashions,
-        build sustainably in climate-sensitive areas, or implement AI strategies for
-        your business, Tyrell is ready to help you achieve exceptional results.
+      Whether you are looking to elevate your space, build something incredible, or harness the power of AI, Tyrell is ready to help achieve exceptional results. 
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -35,11 +33,6 @@ const ConsultationCTA = () => {
         >
           Call: (587) 777-8800
         </a>
-      </div>
-
-      <div className="mt-8 text-sm text-gray-500 max-w-lg">
-        Consultations are available in-person or virtually. Book today and discover
-        how Tyrell's expertise can bring your project to the next level of excellence.
       </div>
     </div>
   );

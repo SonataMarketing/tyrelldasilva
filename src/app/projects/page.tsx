@@ -232,21 +232,6 @@ export default function AIAdoptionPage() {
               </div>
             </div>
           </section>
-
-          {/* CTA Section */}
-          <section>
-            <div className="bg-[#1a1a1a] rounded-lg p-8 md:p-12">
-              <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 font-oswald uppercase text-white">Ready to Transform Your Business with AI?</h2>
-                <p className="text-gray-300 mb-8">
-                  Whether you're just beginning your AI journey or looking to scale existing initiatives, Orchestrator provides the expertise and guidance you need to achieve meaningful results and sustainable growth.
-                </p>
-                <Link href="/contact" className="inline-block bg-[#8B5CF6] text-white px-8 py-4 rounded font-bold text-lg hover:bg-[#7C3AED] transition-colors">
-                  Schedule a Consultation
-                </Link>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
     </Layout>

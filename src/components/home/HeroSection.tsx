@@ -5,11 +5,11 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <div style={{height: "80vh", position: "relative", backgroundColor: "black", overflow: "hidden"}}>
+    <div className="h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh] xl:h-[70vh] relative bg-black overflow-hidden">
       {/* Video background */}
-      <div style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+      <div className="absolute inset-0">
         <video
-          style={{width: "100%", height: "100%", objectFit: "cover"}}
+          className="w-full h-full object-cover"
           autoPlay
           loop
           muted
@@ -17,64 +17,19 @@ export default function HeroSection() {
         >
           <source src="/videos/Tyrell_Website_Banner_V.2.mp4" type="video/mp4" />
         </video>
-        <div style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.6)"}}></div>
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
       {/* Hero Content - Heading, Subheading and button */}
-      <div style={{
-        position: "relative",
-        zIndex: 10,
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "0 24px",
-        maxWidth: "900px",
-        margin: "0 auto",
-        textAlign: "center"
-      }}>
-        <h1 style={{
-          color: "white",
-          fontSize: "35px",
-          fontWeight: "bold",
-          marginBottom: "8px",
-          fontFamily: "Roboto, sans-serif"
-        }}>
+      <div className="relative z-10 h-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-8 lg:px-12 max-w-4xl mx-auto text-center">
+        <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 font-roboto leading-tight">
           Tyrell DaSilva
         </h1>
-        <p style={{
-          color: "white",
-          fontSize: "22px",
-          marginBottom: "36px",
-          fontFamily: "Roboto, sans-serif",
-          maxWidth: "600px"
-        }}>
+        <p className="text-white text-base sm:text-lg md:text-xl lg:text-xl xl:text-xl mb-6 sm:mb-8 md:mb-10 lg:mb-12 font-roboto max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl leading-relaxed">
           From Builder to Automator — I Help Businesses Run Smarter, Scale Faster, and Sell for More
         </p>
         <Link href="/contact">
-          <button
-            style={{
-              backgroundColor: "#8B5CF6",
-              color: "white",
-              fontWeight: "bold",
-              padding: "14px 28px",
-              borderRadius: "6px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "16px",
-              transition: "transform 0.2s, box-shadow 0.2s",
-              boxShadow: "0 4px 6px rgba(139, 92, 246, 0.25)"
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 6px 12px rgba(139, 92, 246, 0.3)";
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 6px rgba(139, 92, 246, 0.25)";
-            }}
-          >
+          <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-7 lg:py-3.5 xl:px-8 xl:py-4 rounded-md border-none cursor-pointer text-sm sm:text-base md:text-lg lg:text-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#8B5CF6]/30 shadow-[#8B5CF6]/25">
             Book a Consultation
           </button>
         </Link>

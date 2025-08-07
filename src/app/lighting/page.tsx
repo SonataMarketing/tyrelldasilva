@@ -103,7 +103,7 @@ export default function LightingPage() {
           </section>
 
           {/* Approach Section */}
-          <section className="mb-20">
+          {/* <section className="mb-20">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 font-oswald uppercase text-white">Our Technical Approach</h2>
             <div className="bg-[#1a1a1a] p-8 rounded-lg">
               <div className="grid md:grid-cols-2 gap-12">
@@ -167,7 +167,7 @@ export default function LightingPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
 
           {/* Case Studies Section */}
           <section className="mb-20">
@@ -236,7 +236,7 @@ export default function LightingPage() {
           </section>
 
           {/* Technology Section */}
-          <section className="mb-20">
+          {/* <section className="mb-20">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 font-oswald uppercase text-white">Advanced Lighting Technologies</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-[#1a1a1a] p-6 rounded-lg transform transition duration-300 hover:translate-y-[-8px]">
@@ -260,22 +260,7 @@ export default function LightingPage() {
                 </p>
               </div>
             </div>
-          </section>
-
-          {/* CTA Section */}
-          <section>
-            <div className="bg-[#1a1a1a] rounded-lg p-8 md:p-12">
-              <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 font-oswald uppercase text-white">Create Your Ideal Light Environment</h2>
-                <p className="text-gray-300 mb-8">
-                  Whether you're planning a new construction project or looking to retrofit an existing space, our light environment solutions can transform your space while reducing your environmental footprint.
-                </p>
-                <Link href="/contact" className="inline-block bg-[#8B5CF6] text-white px-8 py-4 rounded font-bold text-lg hover:bg-[#7C3AED] transition-colors">
-                  Schedule a Light Environment Consultation
-                </Link>
-              </div>
-            </div>
-          </section>
+          </section> */}
         </div>
       </div>
     </Layout>

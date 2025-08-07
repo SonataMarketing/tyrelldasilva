@@ -1,32 +1,93 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     const { firstName, lastName, email, phone, description, referralSource, otherReferral } = data;
 
-    const msgHtml = `
-      <h2>New Contact Form Submission</h2>
-      <p><b>Name:</b> ${firstName} ${lastName}</p>
-      <p><b>Email:</b> ${email}</p>
-      <p><b>Phone:</b> ${phone}</p>
-      <p><b>Referral Source:</b> ${referralSource === 'other' ? `${referralSource} - ${otherReferral}` : referralSource}</p>
-      <p><b>Description:</b> ${description}</p>
-    `;
+    // Check if Mailchimp credentials are configured
+    if (!process.env.MAILCHIMP_API_KEY || !process.env.MAILCHIMP_AUDIENCE_ID) {
+      console.error('❌ Mailchimp credentials not found in environment variables');
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Email service not configured. Please contact administrator.' 
+      }, { status: 500 });
+    }
 
-    await resend.emails.send({
-      from: 'Contact Form <noreply@tyrelldasilva.com>',
-      to: ['marketing@tyrelldasilva.com', 'tyrell@tyrelldasilva.com'],
-      subject: 'New Contact Form Submission',
-      html: msgHtml
+    // Extract server prefix from API key (e.g., 'us14' from API key ending in '-us14')
+    const serverPrefix = process.env.MAILCHIMP_API_KEY.split('-').pop();
+    const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_AUDIENCE_ID}/members`;
+
+    // Prepare contact data for Mailchimp
+    const mailchimpData = {
+      email_address: email,
+      status: 'subscribed',
+      merge_fields: {
+        FNAME: firstName,
+        LNAME: lastName,
+        PHONE: phone,
+        MMERGE6: description, // Custom field for project description
+        MMERGE7: referralSource === 'other' ? `${referralSource} - ${otherReferral}` : referralSource // Custom field for referral source
+      },
+      tags: ['Contact Form Submission']
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.MAILCHIMP_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(mailchimpData)
     });
 
-    return NextResponse.json({ success: true });
-  } catch (e) {
-    console.error(e);
-    return NextResponse.json({ success: false, error: 'Server error.' }, { status: 500 });
+    const result = await response.json();
+
+    if (!response.ok) {
+      // Handle the case where email is already subscribed
+      if (result.title === 'Member Exists') {
+        
+        // Update existing member
+        const updateUrl = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_AUDIENCE_ID}/members/${Buffer.from(email.toLowerCase()).toString('hex')}`;
+        
+        const updateResponse = await fetch(updateUrl, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${process.env.MAILCHIMP_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            merge_fields: mailchimpData.merge_fields,
+            tags: mailchimpData.tags
+          })
+        });
+
+        if (updateResponse.ok) {
+        } else {
+          console.error('❌ Failed to update contact in Mailchimp');
+        }
+      } else {
+        console.error('❌ Mailchimp API error:', result);
+        throw new Error(`Mailchimp API error: ${result.detail || result.title}`);
+      }
+    } else {
+    }
+
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Form submitted successfully! You have been added to our mailing list.' 
+    });
+
+  } catch (error: any) {
+    console.error('❌ Contact form error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name
+    });
+    
+    return NextResponse.json({ 
+      success: false, 
+      error: `Server error: ${error.message}` 
+    }, { status: 500 });
   }
 }

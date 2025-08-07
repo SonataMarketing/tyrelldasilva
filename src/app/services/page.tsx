@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ServicesPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const youtubeRef = useRef<HTMLDivElement>(null);
+  const [shouldPlayYoutube, setShouldPlayYoutube] = useState(false);
 
   useEffect(() => {
     // Play the video when component mounts
@@ -15,6 +17,29 @@ export default function ServicesPage() {
         console.error("Video play failed:", error);
       });
     }
+
+    // Intersection Observer for YouTube video autoplay
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.8) {
+          setShouldPlayYoutube(true);
+        }
+      },
+      {
+        threshold: 0.8, // Video is 80% visible
+        rootMargin: '0px'
+      }
+    );
+
+    if (youtubeRef.current) {
+      observer.observe(youtubeRef.current);
+    }
+
+    return () => {
+      if (youtubeRef.current) {
+        observer.unobserve(youtubeRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -63,7 +88,7 @@ export default function ServicesPage() {
       <div className="bg-[#0e0e0e]">
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
           {/* Company Overview Section */}
-          <section className="mb-20">
+          {/* <section className="mb-20">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 font-oswald uppercase text-white">Company Overview</h2>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -71,29 +96,39 @@ export default function ServicesPage() {
                   Empower Projects originated from a concept aimed at introducing modern, affordable, and notably durable construction methods, initially targeting markets in the Caribbean and South America. The company emphasizes its commitment to durability, citing the resilience of its structures during Hurricane Dorian even when only partially complete, which served to galvanize the founder's vision. Key tenets of their approach include process transparency, detailed specifications, adherence to budget and timelines, and operating with integrity.
                 </p>
               </div>
-              {/* Photo removed for layout simplification */}
               <div />
             </div>
-          </section>
+          </section> */}
 
-          {/* Simplified YouTube Video Link Button */}
-          <div className="w-full max-w-lg mx-auto mb-10">
-            <a
-              href="https://www.youtube.com/watch?v=h3dHJWGvSrU"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold text-center shadow-md transition-colors"
+          {/* YouTube Video Section */}
+          <section className="mb-20">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-oswald uppercase text-white">
+              Company Overview
+              </h2>
+              <p className="text-gray-300 text-lg max-w-34xl mx-auto">
+              Empower Projects originated from a concept aimed at introducing modern, affordable, and notably durable construction methods, initially targeting markets in the Caribbean and South America. The company emphasizes its commitment to durability, citing the resilience of its structures during Hurricane Dorian even when only partially complete, which served to galvanize the founder's vision. Key tenets of their approach include process transparency, detailed specifications, adherence to budget and timelines, and operating with integrity.
+              </p>
+            </div>
+            
+            <div 
+              ref={youtubeRef}
+              className="w-full max-w-4xl mx-auto"
             >
-              <span className="flex items-center justify-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-                Watch Empower Building System Demo on YouTube
-              </span>
-            </a>
-          </div>
-
-          {/* Removed YouTube Video Info Box per request */}
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl"
+                  src={`https://www.youtube.com/embed/h3dHJWGvSrU?${shouldPlayYoutube ? 'autoplay=1&' : ''}mute=1&controls=1&rel=0&modestbranding=1&showinfo=0`}
+                  title="Empower Projects Building System"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="text-center mt-6">
+              </div>
+            </div>
+          </section>
 
           {/* The Empower Building System */}
           <section className="mb-20">
@@ -191,21 +226,6 @@ export default function ServicesPage() {
                 <p className="text-gray-300">
                   The lightweight nature of the EPS and steel stud components offers efficiency advantages during construction. Easier handling leads to faster build times and potentially lower labor and equipment costs compared to heavier traditional materials.
                 </p>
-              </div>
-            </div>
-          </section>
-
-          {/* CTA Section */}
-          <section>
-            <div className="bg-[#1a1a1a] rounded-lg p-8 md:p-12">
-              <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 font-oswald uppercase text-white">Ready to Build Resilience?</h2>
-                <p className="text-gray-300 mb-8">
-                  Whether you're planning a new project in a climate-sensitive area or looking to retrofit an existing structure for greater resilience, we can help you navigate the complexities and create solutions that stand the test of time and nature.
-                </p>
-                <Link href="/contact" className="inline-block bg-[#8B5CF6] text-white px-8 py-4 rounded font-bold text-lg hover:bg-[#7C3AED] transition-colors">
-                  Schedule a Consultation
-                </Link>
               </div>
             </div>
           </section>

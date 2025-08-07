@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.variable}>
       <ClientBody>
-        <div className="md:ml-64 min-h-screen bg-[#18191b]">
+        <div className="md:ml-72 min-h-screen bg-[#18191b]">
           {children}
         </div>
       </ClientBody>
