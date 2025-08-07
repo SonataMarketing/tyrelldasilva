@@ -78,16 +78,16 @@ export async function POST(req: NextRequest) {
       message: 'Form submitted successfully! You have been added to our mailing list.' 
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Contact form error:', error);
     console.error('Error details:', {
-      message: error.message,
-      name: error.name
+      message: error instanceof Error ? error.message : 'Unknown error',
+      name: error instanceof Error ? error.name : 'Unknown'
     });
     
     return NextResponse.json({ 
       success: false, 
-      error: `Server error: ${error.message}` 
+      error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}` 
     }, { status: 500 });
   }
 }
