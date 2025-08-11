@@ -87,28 +87,60 @@ const ContactForm = () => {
     setSubmitStatus('idle');
 
     try {
-      const res = await fetch('/api/contact', {
+      // Using Web3Forms - no backend needed!
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          // Using Web3Forms access key from environment variable
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '',
+          
+          // Form data
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.description,
+          referral_source: formData.referralSource === 'other' 
+            ? `Other - ${formData.otherReferral}` 
+            : formData.referralSource,
+          
+          // Optional: Customize the email subject
+          subject: `New Contact Form Submission from ${formData.firstName} ${formData.lastName}`,
+          
+          // Optional: Where to receive emails (if not set in Web3Forms dashboard)
+          // to_email: 'chris@sonatadesign.ca',
+          
+          // Success redirect (optional)
+          redirect: 'https://web3forms.com/success',
+          
+          // Additional settings
+          from_name: 'Tyrell Da Silva Website',
+          replyto: formData.email,
+        })
       });
 
-      if (!res.ok) throw new Error('Network response was not ok');
-      const body = await res.json();
-      if (!body.success) throw new Error('API error');
+      const data = await response.json();
 
-      setSubmitStatus('success');
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        description: '',
-        referralSource: '',
-        otherReferral: ''
-      });
+      if (response.ok && data.success) {
+        // console.log('✅ Form submitted successfully');
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          description: '',
+          referralSource: '',
+          otherReferral: '',
+        });
+      } else {
+        console.error('❌ Form submission failed:', data);
+        throw new Error(data.message || 'Form submission failed');
+      }
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
