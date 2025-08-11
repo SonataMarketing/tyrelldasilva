@@ -29,7 +29,7 @@ export default function ContactPage() {
             loop
             playsInline
           >
-          8  <source src="/videos/Tyrell_Website_Banner_V.2.mp4" type="video/mp4" />
+          8  <source src="/videos/Tyrell Banner Video V2.mp4" type="video/mp4" />
             {/* Fallback image if video doesn't load */}
             <Image
               src="/images/modern-office-hero-hq.jpg"

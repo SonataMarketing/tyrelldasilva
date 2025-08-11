@@ -1,5 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Add OPTIONS handler for CORS preflight requests
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, { 
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();

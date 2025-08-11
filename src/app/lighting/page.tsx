@@ -1,24 +1,46 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Layout from '@/components/layout/Layout';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LightingPage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Play the video when component mounts
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.error("Video play failed:", error);
+      });
+    }
+  }, []);
+
   return (
     <Layout>
-      {/* Hero Section with Background Image */}
+      {/* Hero Section with Video Background */}
       <div className="relative w-full h-[70vh] overflow-hidden mt-0">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/1200x688_LivingRoom_SeaholmPH_CC_Energize_B.jpg"
-            alt="Beautifully lit living room with natural and artificial light integration"
-            fill
-            className="object-cover"
-            priority
-            quality={100}
-          />
+          <video
+            ref={videoRef}
+            className="object-cover w-full h-full"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src="/videos/Light control Banner  (1).mp4" type="video/mp4" />
+            {/* Fallback image if video doesn't load */}
+            <Image
+              src="/images/1200x688_LivingRoom_SeaholmPH_CC_Energize_B.jpg"
+              alt="Beautifully lit living room with natural and artificial light integration"
+              fill
+              className="object-cover"
+              priority
+              quality={100}
+            />
+          </video>
           <div className="absolute inset-0 bg-black/50 z-10"></div>
         </div>
         <div className="relative h-full flex items-center z-20">
